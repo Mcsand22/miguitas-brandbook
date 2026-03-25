@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SOLUCIÓN MOBILE: Fuerza el ancho a 850px para que el celular haga zoom-out automático sin romper la impresión ni el diseño -->
+    <meta name="viewport" content="width=850">
     <title>Brand Book - Miguitas Pastelería Artesanal</title>
     
     <!-- Google Fonts -->
@@ -22,19 +23,10 @@
             theme: {
                 extend: {
                     colors: {
-                        brown: {
-                            DEFAULT: '#5C2D0E',
-                            light: '#7A4420'
-                        },
-                        orange: {
-                            DEFAULT: '#E8871E',
-                            light: '#F0A54A'
-                        },
+                        brown: { DEFAULT: '#5C2D0E', light: '#7A4420' },
+                        orange: { DEFAULT: '#E8871E', light: '#F0A54A' },
                         gold: '#D4A04A',
-                        cream: {
-                            DEFAULT: '#FFF8F0',
-                            dark: '#F5EBD8'
-                        },
+                        cream: { DEFAULT: '#FFF8F0', dark: '#F5EBD8' },
                         warm: '#FDF6EC'
                     },
                     fontFamily: {
@@ -73,46 +65,31 @@
             width: 100%;
         }
 
-        /* Estilos específicos para impresión (PDF) */
-        @media print {
-            body {
-                background-color: white !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            .page-break {
-                page-break-after: always;
-                break-after: page;
-            }
-            .no-print {
-                display: none !important;
-            }
-            .print-container {
-                box-shadow: none !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                width: 100% !important;
-                max-width: 100% !important;
-            }
-            .page {
-                min-height: 297mm; /* Alto A4 */
-                padding: 20mm !important;
-                margin: 0 !important;
-            }
+        body {
+            background-color: #e5e7eb; /* Gris claro de fondo para la PC */
+            margin: 0;
         }
 
-        /* Contenedor de páginas para pantalla */
+        /* Contenedor principal que separa visualmente las hojas en PC */
+        .print-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            padding: 40px 0;
+            width: 100%;
+        }
+
+        /* Estricto contenedor A4 para pantalla */
         .page {
             width: 210mm;
             height: 297mm;
             box-sizing: border-box;
             padding: 15mm 20mm;
             background-color: white;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Efecto hoja de papel */
             position: relative;
-            overflow: hidden;
-            page-break-after: always;
-            break-after: page;
+            overflow: hidden; /* Evita que el contenido desborde a la siguiente hoja */
             flex-shrink: 0;
         }
 
@@ -120,12 +97,40 @@
         .circle-decoration {
             position: absolute;
             border-radius: 50%;
-            background: rgba(245, 235, 216, 0.5); /* cream-dark con opacidad */
+            background: rgba(245, 235, 216, 0.5);
             z-index: 0;
+        }
+
+        /* Estilos estrictos y protegidos para impresión (PDF) */
+        @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
+            body {
+                background-color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                margin: 0 !important;
+            }
+            .print-wrapper {
+                display: block !important;
+                gap: 0 !important;
+                padding: 0 !important;
+            }
+            .page {
+                box-shadow: none !important;
+                margin: 0 !important;
+                page-break-after: always !important;
+                break-after: page !important;
+            }
+            .no-print {
+                display: none !important;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-100 font-body text-brown selection:bg-orange-light selection:text-white">
+<body class="font-body text-brown selection:bg-orange-light selection:text-white">
 
     <!-- Botón flotante para imprimir -->
     <button onclick="window.print()" class="no-print fixed bottom-8 right-8 bg-orange hover:bg-brown text-white font-bold py-3 px-6 rounded-full shadow-lg transition-all flex items-center gap-2 z-50 animate-fade-in-up">
@@ -133,10 +138,10 @@
         Guardar como PDF
     </button>
 
-    <div class="max-w-[800px] mx-auto bg-white shadow-2xl my-8 print-container">
+    <div class="print-wrapper">
 
         <!-- ================= PÁGINA 1: PORTADA ================= -->
-        <div class="page bg-gingham flex items-center justify-center p-12 page-break">
+        <div class="page bg-gingham flex items-center justify-center p-12">
             <div class="text-center z-10 animate-fade-in-up bg-white/80 p-12 rounded-[3rem] shadow-xl backdrop-blur-sm border-2 border-cream-dark w-full max-w-lg">
                 <img src="img/logo-sinfondo.png" alt="Miguitas Logo" class="w-48 h-48 mx-auto mb-8 rounded-full object-cover shadow-md border-4 border-white bg-white" onerror="this.src='https://placehold.co/400x400/FFF8F0/5C2D0E?text=Logo+Miguitas&font=Playfair+Display'">
                 
@@ -156,7 +161,7 @@
         </div>
 
         <!-- ================= PÁGINA 2: ESENCIA ================= -->
-        <div class="page bg-warm p-16 page-break relative flex flex-col justify-center">
+        <div class="page bg-warm p-16 relative flex flex-col justify-center">
             <div class="z-10 animate-fade-in-up" style="animation-delay: 0.2s;">
                 <div class="flex items-center gap-4 mb-8">
                     <i data-lucide="heart-handshake" class="w-10 h-10 text-orange"></i>
@@ -168,7 +173,7 @@
                         <strong>Miguitas</strong> es mucho más que una panadería; es un espacio cálido y artesanal enfocado en la pastelería cien por ciento basada en plantas. Nuestro tono es cercano, amigable y hogareño.
                     </p>
                     <p class="text-lg leading-relaxed text-brown-light">
-                        Cada elemento de nuestra marca busca transmitir el cuidado y el amor que ponemos en cada horneada, desde nuestros tiernos cinnamon rolls hasta los croissants y otras delicias veganas y vegetarianas.
+                        Cada elemento de nuestra marca busca transmitir el cuidado y el amor que ponemos en cada horneada, desde nuestros tiernos rolls hasta las medialunas y otras delicias veganas y vegetarianas.
                     </p>
                 </div>
 
@@ -184,7 +189,7 @@
         </div>
 
         <!-- ================= PÁGINA 3: MASCOTA ================= -->
-        <div class="page bg-cream p-16 page-break">
+        <div class="page bg-cream p-16">
             <div class="flex items-center gap-4 mb-10">
                 <i data-lucide="smile" class="w-10 h-10 text-gold"></i>
                 <h2 class="font-serif text-4xl font-bold text-brown">Nuestra Mascota y Logos</h2>
@@ -199,34 +204,34 @@
                 <div class="bg-white p-6 rounded-3xl shadow-sm border border-cream-dark flex flex-col items-center justify-center text-center">
                     <img src="img/logo-sinfondo.png" alt="Logo Principal" class="w-50 h-50 object-contain mb-4 rounded-xl bg-white" onerror="this.src='https://placehold.co/300x300/FFF8F0/E8871E?text=Logo'">
                     <h3 class="font-serif font-bold text-brown text-lg">Logo Principal</h3>
-                    <p class="text-sm text-brown-light mt-2">Versión completa con tipografía para fondos claros.</p>
+                    <p class="text-sm text-brown-light mt-2">Versión completa con tipografía.</p>
                 </div>
 
                 <!-- Mascota con Roll -->
                 <div class="bg-brown p-6 rounded-3xl shadow-sm flex flex-col items-center justify-center text-center">
                     <img src="img/miguita-luna-sinfondo.png" alt="Mascota con Roll" class="w-50 h-50 object-contain mb-4" onerror="this.src='https://placehold.co/300x300/000000/F0A54A?text=Mascota+Roll'">
                     <h3 class="font-serif font-bold text-white text-lg">Mascota en Acción</h3>
-                    <p class="text-sm text-gray-400 mt-2">Miguita con producto, ideal para destacar promociones.</p>
+                    <p class="text-sm text-gray-400 mt-2">Ideal para destacar promociones.</p>
                 </div>
 
                 <!-- Mascota Saludando -->
                 <div class="bg-brown p-6 rounded-3xl shadow-sm flex flex-col items-center justify-center text-center">
                     <img src="img/miguita-sinfondo.png" alt="Mascota sola" class="w-40 h-40 object-contain mb-4" onerror="this.src='https://placehold.co/300x300/000000/F0A54A?text=Mascota'">
                     <h3 class="font-serif font-bold text-white text-lg">Mascota Aislada</h3>
-                    <p class="text-sm text-gray-400 mt-2">Para elementos de UI, stickers y packaging.</p>
+                    <p class="text-sm text-gray-400 mt-2">Para elementos de UI y stickers.</p>
                 </div>
 
                  <!-- Roll dulce -->
                  <div class="bg-brown p-6 rounded-3xl shadow-sm flex flex-col items-center justify-center text-center">
                     <img src="img/miguita-roll-dulce-sinfondo.png" alt="Mascota roll dulce" class="w-50 h-50 object-contain mb-4" onerror="this.src='https://placehold.co/300x300/000000/F0A54A?text=Roll+Dulce'">
                     <h3 class="font-serif font-bold text-white text-lg">Versión Alternativa</h3>
-                    <p class="text-sm text-gray-400 mt-2">Variación de la mascota con otro producto.</p>
+                    <p class="text-sm text-gray-400 mt-2">Variación con otro producto.</p>
                 </div>
             </div>
         </div>
 
         <!-- ================= PÁGINA 4: PALETA DE COLORES ================= -->
-        <div class="page bg-white p-16 page-break">
+        <div class="page bg-white p-16">
             <div class="flex items-center gap-4 mb-10">
                 <i data-lucide="palette" class="w-10 h-10 text-orange-light"></i>
                 <h2 class="font-serif text-4xl font-bold text-brown">Paleta de Colores</h2>
@@ -240,83 +245,35 @@
                 <div>
                     <h3 class="font-handwritten text-3xl text-brown mb-4">Tierra y Masas</h3>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <!-- Brown -->
-                        <div class="flex flex-col">
-                            <div class="h-24 rounded-2xl bg-brown shadow-inner mb-2"></div>
-                            <span class="font-bold text-sm text-brown">Marrón Oscuro</span>
-                            <span class="text-xs text-gray-500 font-mono">#5C2D0E</span>
-                            <span class="text-xs text-gray-400 mt-1">Textos, contrastes</span>
-                        </div>
-                        <!-- Brown Light -->
-                        <div class="flex flex-col">
-                            <div class="h-24 rounded-2xl bg-brown-light shadow-inner mb-2"></div>
-                            <span class="font-bold text-sm text-brown">Marrón Medio</span>
-                            <span class="text-xs text-gray-500 font-mono">#7A4420</span>
-                            <span class="text-xs text-gray-400 mt-1">Secundarios, bordes</span>
-                        </div>
-                        <!-- Orange -->
-                        <div class="flex flex-col">
-                            <div class="h-24 rounded-2xl bg-orange shadow-inner mb-2"></div>
-                            <span class="font-bold text-sm text-brown">Naranja Acento</span>
-                            <span class="text-xs text-gray-500 font-mono">#E8871E</span>
-                            <span class="text-xs text-gray-400 mt-1">Botones, CTA</span>
-                        </div>
-                        <!-- Orange Light -->
-                        <div class="flex flex-col">
-                            <div class="h-24 rounded-2xl bg-orange-light shadow-inner mb-2"></div>
-                            <span class="font-bold text-sm text-brown">Naranja Suave</span>
-                            <span class="text-xs text-gray-500 font-mono">#F0A54A</span>
-                            <span class="text-xs text-gray-400 mt-1">Iluminación, fondos</span>
-                        </div>
+                        <div class="flex flex-col"><div class="h-24 rounded-2xl bg-brown shadow-inner mb-2"></div><span class="font-bold text-sm text-brown">Marrón Oscuro</span><span class="text-xs text-gray-500 font-mono">#5C2D0E</span></div>
+                        <div class="flex flex-col"><div class="h-24 rounded-2xl bg-brown-light shadow-inner mb-2"></div><span class="font-bold text-sm text-brown">Marrón Medio</span><span class="text-xs text-gray-500 font-mono">#7A4420</span></div>
+                        <div class="flex flex-col"><div class="h-24 rounded-2xl bg-orange shadow-inner mb-2"></div><span class="font-bold text-sm text-brown">Naranja Acento</span><span class="text-xs text-gray-500 font-mono">#E8871E</span></div>
+                        <div class="flex flex-col"><div class="h-24 rounded-2xl bg-orange-light shadow-inner mb-2"></div><span class="font-bold text-sm text-brown">Naranja Suave</span><span class="text-xs text-gray-500 font-mono">#F0A54A</span></div>
                     </div>
                 </div>
 
                 <div class="pt-6 border-t border-cream-dark">
                     <h3 class="font-handwritten text-3xl text-brown mb-4">Decorativos y Fondos</h3>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <!-- Gold -->
-                        <div class="flex flex-col">
-                            <div class="h-24 rounded-2xl bg-gold shadow-inner mb-2"></div>
-                            <span class="font-bold text-sm text-brown">Dorado</span>
-                            <span class="text-xs text-gray-500 font-mono">#D4A04A</span>
-                            <span class="text-xs text-gray-400 mt-1">Destellos, íconos</span>
-                        </div>
-                        <!-- Cream -->
-                        <div class="flex flex-col">
-                            <div class="h-24 rounded-2xl bg-cream border border-gray-200 shadow-inner mb-2"></div>
-                            <span class="font-bold text-sm text-brown">Crema Principal</span>
-                            <span class="text-xs text-gray-500 font-mono">#FFF8F0</span>
-                            <span class="text-xs text-gray-400 mt-1">Fondo Web Principal</span>
-                        </div>
-                        <!-- Cream Dark -->
-                        <div class="flex flex-col">
-                            <div class="h-24 rounded-2xl bg-cream-dark border border-gray-200 shadow-inner mb-2"></div>
-                            <span class="font-bold text-sm text-brown">Crema Oscuro</span>
-                            <span class="text-xs text-gray-500 font-mono">#F5EBD8</span>
-                            <span class="text-xs text-gray-400 mt-1">Secciones alternas</span>
-                        </div>
-                        <!-- Warm -->
-                        <div class="flex flex-col">
-                            <div class="h-24 rounded-2xl bg-warm border border-gray-200 shadow-inner mb-2"></div>
-                            <span class="font-bold text-sm text-brown">Cálido</span>
-                            <span class="text-xs text-gray-500 font-mono">#FDF6EC</span>
-                            <span class="text-xs text-gray-400 mt-1">Tarjetas, contenedores</span>
-                        </div>
+                        <div class="flex flex-col"><div class="h-24 rounded-2xl bg-gold shadow-inner mb-2"></div><span class="font-bold text-sm text-brown">Dorado</span><span class="text-xs text-gray-500 font-mono">#D4A04A</span></div>
+                        <div class="flex flex-col"><div class="h-24 rounded-2xl bg-cream border border-gray-200 shadow-inner mb-2"></div><span class="font-bold text-sm text-brown">Crema Principal</span><span class="text-xs text-gray-500 font-mono">#FFF8F0</span></div>
+                        <div class="flex flex-col"><div class="h-24 rounded-2xl bg-cream-dark border border-gray-200 shadow-inner mb-2"></div><span class="font-bold text-sm text-brown">Crema Oscuro</span><span class="text-xs text-gray-500 font-mono">#F5EBD8</span></div>
+                        <div class="flex flex-col"><div class="h-24 rounded-2xl bg-warm border border-gray-200 shadow-inner mb-2"></div><span class="font-bold text-sm text-brown">Cálido</span><span class="text-xs text-gray-500 font-mono">#FDF6EC</span></div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- ================= PÁGINA 5: TIPOGRAFÍA ================= -->
-        <div class="page bg-cream-dark p-16 page-break">
-            <div class="flex items-center gap-4 mb-10">
+        <div class="page bg-cream-dark p-12">
+            <div class="flex items-center gap-4 mb-8">
                 <i data-lucide="type" class="w-10 h-10 text-brown"></i>
                 <h2 class="font-serif text-4xl font-bold text-brown">Tipografía</h2>
             </div>
 
-            <div class="space-y-12">
+            <div class="space-y-6">
                 <!-- Playfair -->
-                <div class="bg-white p-8 rounded-3xl shadow-sm">
+                <div class="bg-white p-6 rounded-3xl shadow-sm">
                     <div class="flex justify-between items-end mb-4 border-b border-cream pb-4">
                         <div>
                             <p class="text-sm text-orange font-bold uppercase tracking-wider mb-1">Títulos y Encabezados</p>
@@ -324,7 +281,7 @@
                         </div>
                         <span class="text-5xl font-serif text-brown-light">Aa</span>
                     </div>
-                    <p class="font-serif text-xl text-brown-light mb-4 leading-relaxed">
+                    <p class="font-serif text-xl text-brown-light mb-2 leading-relaxed">
                         A B C D E F G H I J K L M N O P Q R S T U V W X Y Z <br>
                         a b c d e f g h i j k l m n o p q r s t u v w x y z <br>
                         0 1 2 3 4 5 6 7 8 9 ! ? @ # & %
@@ -335,7 +292,7 @@
                 </div>
 
                 <!-- Grand Hotel -->
-                <div class="bg-white p-8 rounded-3xl shadow-sm">
+                <div class="bg-white p-6 rounded-3xl shadow-sm">
                     <div class="flex justify-between items-end mb-4 border-b border-cream pb-4">
                         <div>
                             <p class="text-sm text-orange font-bold uppercase tracking-wider mb-1">Acentos y Detalles</p>
@@ -343,18 +300,18 @@
                         </div>
                         <span class="text-5xl font-handwritten text-brown-light">Aa</span>
                     </div>
-                    <p class="font-handwritten text-3xl text-brown-light mb-4 leading-relaxed">
+                    <p class="font-handwritten text-3xl text-brown-light mb-2 leading-relaxed">
                         A B C D E F G H I J K L M N O P Q R S T U V W X Y Z <br>
                         a b c d e f g h i j k l m n o p q r s t u v w x y z <br>
                         0 1 2 3 4 5 6 7 8 9 ! ? @ # & %
                     </p>
                     <p class="font-body text-sm text-gray-500">
-                        Uso: Firmas, etiquetas promocionales ("100% Plant-Based") o frases decorativas.
+                        Uso: Firmas, etiquetas promocionales o frases decorativas.
                     </p>
                 </div>
 
                 <!-- DM Sans -->
-                <div class="bg-white p-8 rounded-3xl shadow-sm">
+                <div class="bg-white p-6 rounded-3xl shadow-sm">
                     <div class="flex justify-between items-end mb-4 border-b border-cream pb-4">
                         <div>
                             <p class="text-sm text-orange font-bold uppercase tracking-wider mb-1">Cuerpo de Texto / UI</p>
@@ -362,7 +319,7 @@
                         </div>
                         <span class="text-4xl font-body font-bold text-brown-light">Aa</span>
                     </div>
-                    <p class="font-body text-lg text-brown-light mb-4 leading-relaxed">
+                    <p class="font-body text-lg text-brown-light mb-2 leading-relaxed">
                         A B C D E F G H I J K L M N O P Q R S T U V W X Y Z <br>
                         a b c d e f g h i j k l m n o p q r s t u v w x y z <br>
                         0 1 2 3 4 5 6 7 8 9 ! ? @ # & %
@@ -375,91 +332,68 @@
         </div>
 
         <!-- ================= PÁGINA 6: UI Y ESTILO VISUAL ================= -->
-        <div class="page bg-warm p-16">
-            <div class="flex items-center gap-4 mb-10">
-                <i data-lucide="layout" class="w-10 h-10 text-orange"></i>
-                <h2 class="font-serif text-4xl font-bold text-brown">Estilo Visual y Componentes</h2>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                
-                <!-- Botones y Formas -->
-                <div>
-                    <h3 class="font-handwritten text-3xl text-brown mb-6">Botones y Formas</h3>
-                    <p class="text-sm text-brown-light mb-6">Priorizamos los bordes redondeados orgánicos (<code class="bg-white px-2 py-1 rounded">rounded-full</code>, <code class="bg-white px-2 py-1 rounded">rounded-2xl</code>) para mantener un tono amigable.</p>
-                    
-                    <div class="space-y-4">
-                        <button class="w-full bg-orange hover:bg-brown text-white font-bold py-4 px-8 rounded-full shadow-md transition-colors flex justify-center items-center gap-2">
-                            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
-                            Hacer un Pedido
-                        </button>
-                        
-                        <button class="w-full bg-white border-2 border-orange text-orange hover:bg-cream font-bold py-4 px-8 rounded-full shadow-sm transition-colors">
-                            Ver Menú
-                        </button>
-                    </div>
+        <div class="page bg-warm p-12 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center gap-4 mb-8">
+                    <i data-lucide="layout" class="w-10 h-10 text-orange"></i>
+                    <h2 class="font-serif text-4xl font-bold text-brown">Estilo Visual y Componentes</h2>
                 </div>
 
-                <!-- Tarjetas -->
-                <div>
-                    <h3 class="font-handwritten text-3xl text-brown mb-6">Tarjetas de Producto</h3>
-                    
-                    <div class="bg-white p-6 rounded-2xl shadow-lg border border-cream hover:-translate-y-1 transition-transform duration-300">
-                        <div class="bg-cream-dark h-32 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-                             <img src="miguita-roll-dulce-sinfondo.jpg" alt="Cinnamon Roll" class="h-40 object-cover" onerror="this.src='https://placehold.co/300x200/F5EBD8/D4A04A?text=Foto+Producto'">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Botones y Formas -->
+                    <div>
+                        <h3 class="font-handwritten text-3xl text-brown mb-6">Botones y Formas</h3>
+                        <p class="text-sm text-brown-light mb-6">Bordes redondeados orgánicos para un tono amigable.</p>
+                        <div class="space-y-4">
+                            <button class="w-full bg-orange hover:bg-brown text-white font-bold py-4 px-8 rounded-full shadow-md transition-colors flex justify-center items-center gap-2">
+                                <i data-lucide="shopping-bag" class="w-5 h-5"></i> Hacer un Pedido
+                            </button>
+                            <button class="w-full bg-white border-2 border-orange text-orange hover:bg-cream font-bold py-4 px-8 rounded-full shadow-sm transition-colors">
+                                Ver Menú
+                            </button>
                         </div>
-                        <div class="flex justify-between items-start mb-2">
-                            <h4 class="font-serif font-bold text-xl text-brown">Cinnamon Roll</h4>
-                            <span class="font-body font-bold text-orange">$3.50</span>
-                        </div>
-                        <p class="font-body text-sm text-brown-light mb-4">Masa suave, canela orgánica y frosting 100% plant-based.</p>
-                        <button class="text-sm text-orange font-bold uppercase tracking-wider hover:text-brown transition-colors">Agregar +</button>
                     </div>
-                </div>
 
-                <!-- Iconografía y Animación -->
-                <div class="col-span-1 md:col-span-2 mt-4 pt-8 border-t border-cream-dark">
-                    <h3 class="font-handwritten text-3xl text-brown mb-6">Iconografía y Detalles</h3>
-                    
-                    <div class="flex flex-wrap gap-8 items-center bg-white p-8 rounded-3xl shadow-sm">
-                        <div class="flex flex-col items-center gap-2">
-                            <div class="bg-cream-dark p-4 rounded-full text-brown">
-                                <i data-lucide="wheat" class="w-8 h-8"></i>
+                    <!-- Tarjetas -->
+                    <div>
+                        <h3 class="font-handwritten text-3xl text-brown mb-6">Tarjetas de Producto</h3>
+                        <!-- Se agregó max-w-xs para que mantenga proporciones de tarjeta y hover effect -->
+                        <div class="bg-white p-6 rounded-2xl shadow-lg border border-cream max-w-xs hover:-translate-y-1 transition-transform duration-300">
+                            <div class="bg-cream-dark h-32 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
+                                 <img src="img/miguita-roll-dulce-sinfondo.png" alt="Cinnamon Roll" class="h-40 object-cover" onerror="this.src='https://placehold.co/300x200/F5EBD8/D4A04A?text=Foto'">
                             </div>
-                            <span class="text-xs font-bold text-brown-light">Ingredientes</span>
-                        </div>
-                        <div class="flex flex-col items-center gap-2">
-                            <div class="bg-cream-dark p-4 rounded-full text-orange">
-                                <i data-lucide="leaf" class="w-8 h-8"></i>
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-serif font-bold text-xl text-brown">Rol de canela y chocolate</h4>
+                                <span class="font-body font-bold text-orange">$4.500</span>
                             </div>
-                            <span class="text-xs font-bold text-brown-light">Vegano</span>
+                            <p class="font-body text-sm text-brown-light mb-4">Masa suave aromatizada con cítricos naturales, rellena con pasta de canela, azúcar y trozos de chocolate con naranja.</p>
+                            <button class="text-sm text-orange font-bold uppercase tracking-wider hover:text-brown transition-colors">Agregar +</button>
                         </div>
-                        <div class="flex flex-col items-center gap-2">
-                            <div class="bg-cream-dark p-4 rounded-full text-gold">
-                                <i data-lucide="coffee" class="w-8 h-8"></i>
+                    </div>
+
+                    <!-- Iconografía -->
+                    <div class="col-span-1 md:col-span-2 mt-2 pt-6 border-t border-cream-dark">
+                        <h3 class="font-handwritten text-3xl text-brown mb-4">Iconografía y Detalles</h3>
+                        <div class="flex flex-wrap gap-8 items-center bg-white p-6 rounded-3xl shadow-sm">
+                            <div class="flex flex-col items-center gap-2"><div class="bg-cream-dark p-4 rounded-full text-brown"><i data-lucide="wheat" class="w-8 h-8"></i></div><span class="text-xs font-bold text-brown-light">Ingredientes</span></div>
+                            <div class="flex flex-col items-center gap-2"><div class="bg-cream-dark p-4 rounded-full text-orange"><i data-lucide="leaf" class="w-8 h-8"></i></div><span class="text-xs font-bold text-brown-light">Vegano</span></div>
+                            <div class="flex flex-col items-center gap-2"><div class="bg-cream-dark p-4 rounded-full text-gold"><i data-lucide="coffee" class="w-8 h-8"></i></div><span class="text-xs font-bold text-brown-light">Cafetería</span></div>
+                            <div class="ml-auto flex-1 text-right">
+                                <p class="text-sm text-brown-light italic">Íconos: <strong>Lucide React</strong></p>
                             </div>
-                            <span class="text-xs font-bold text-brown-light">Cafetería</span>
-                        </div>
-                        
-                        <div class="ml-auto flex-1 text-right">
-                            <p class="text-sm text-brown-light italic">
-                                Sistema de íconos: <strong>Lucide React</strong>.<br>
-                                Aplicados en marrón medio, naranja o dorado.
-                            </p>
                         </div>
                     </div>
                 </div>
-                
             </div>
             
-            <!-- Footer del Brandbook -->
-            <div class="mt-16 text-center">
-                <div class="gold-gradient-line my-6"></div>
+            <!-- Footer del Brandbook empujado hacia abajo -->
+            <div class="mt-8 text-center pb-2">
+                <div class="gold-gradient-line my-4"></div>
                 <p class="font-handwritten text-3xl text-orange">Hecho con amor y plantas</p>
-                <p class="font-body text-xs text-brown-light mt-2 uppercase tracking-widest">Miguitas Pastelería Artesanal © 2026</p>
+                <p class="font-body text-xs text-brown-light mt-1 uppercase tracking-widest">Miguitas Pastelería Artesanal © 2026</p>
             </div>
-            
         </div>
+
     </div>
 
     <!-- Inicializar Lucide Icons -->
