@@ -4,25 +4,25 @@ Bienvenido al repositorio del Manual de Identidad Visual de Miguitas. Este proye
 
 # 🛠️ Tecnologías Utilizadas
 
-HTML5 & CSS3: Estructura semántica y estilos personalizados para la impresión (@page).
+## HTML5 & CSS3: Estructura semántica y estilos personalizados para la impresión (@page).
 
-Tailwind CSS: Framework de utilidades para un maquetado rápido y un sistema de diseño consistente.
+## Tailwind CSS: Framework de utilidades para un maquetado rápido y un sistema de diseño consistente.
 
-Google Fonts: Tipografías seleccionadas (Playfair Display, Grand Hotel y DM Sans).
+## Google Fonts: Tipografías seleccionadas (Playfair Display, Grand Hotel y DM Sans).
 
-Lucide Icons: Sistema de íconos vectoriales liviano y personalizable.
+## Lucide Icons: Sistema de íconos vectoriales liviano y personalizable.
 
 # 🚀 Cómo utilizar este manual
 
-Clonar o Descargar: Asegúrate de tener el archivo brandbook.html y todas las imágenes correspondientes en la misma carpeta.
+## Clonar o Descargar: Asegúrate de tener el archivo brandbook.html y todas las imágenes correspondientes en la misma carpeta.
 
-Visualización: Haz doble clic en el archivo brandbook.html para abrirlo en tu navegador web preferido (recomendamos Google Chrome o Safari).
+## Visualización: Haz doble clic en el archivo brandbook.html para abrirlo en tu navegador web preferido (recomendamos Google Chrome o Safari).
 
-Exportación a PDF: * Haz clic en el botón flotante "Guardar como PDF" ubicado en la esquina inferior derecha.
+## Exportación a PDF: * Haz clic en el botón flotante "Guardar como PDF" ubicado en la esquina inferior derecha.
 
-Asegúrate de configurar los márgenes como "Ninguno" o "Predeterminados" en la ventana de impresión.
+## Asegúrate de configurar los márgenes como "Ninguno" o "Predeterminados" en la ventana de impresión.
 
-Habilita la opción "Gráficos de fondo" si tu navegador lo requiere para ver los colores correctamente.
+## Habilita la opción "Gráficos de fondo" si tu navegador lo requiere para ver los colores correctamente.
 
 # 📐 Diseño y Formato (A4)
 
@@ -30,23 +30,23 @@ El documento está estrictamente configurado para ajustarse a una hoja tamaño A
 
 # 🎨 Identidad de la Marca
 
-Colores Principales
+## Colores Principales
 
-🟤 Marrón Oscuro: #5C2D0E (Textos principales, contrastes)
+### 🟤 Marrón Oscuro: #5C2D0E (Textos principales, contrastes)
 
-🟤 Marrón Medio: #7A4420 (Elementos secundarios)
+### 🟤 Marrón Medio: #7A4420 (Elementos secundarios)
 
-🟠 Naranja Acento: #E8871E (Botones, CTA)
+### 🟠 Naranja Acento: #E8871E (Botones, CTA)
 
-🟡 Naranja Suave: #F0A54A (Iluminación, fondos)
+### 🟡 Naranja Suave: #F0A54A (Iluminación, fondos)
 
-Tipografía
+## Tipografía
 
-Títulos: Playfair Display (Serif)
+### Títulos: Playfair Display (Serif)
 
-Acentos: Grand Hotel (Handwritten)
+### Acentos: Grand Hotel (Handwritten)
 
-Cuerpo/UI: DM Sans (Sans-serif)
+### Cuerpo/UI: DM Sans (Sans-serif)
 
 
 Hecho con amor y plantas 🌱 - Miguitas Pastelería Artesanal
