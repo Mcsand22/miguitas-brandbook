@@ -30,7 +30,7 @@ El documento está estrictamente configurado para ajustarse a una hoja tamaño A
 
 # 🎨 Identidad de la Marca
 
-Colores Principales
+## Colores Principales
 
 🟤 Marrón Oscuro: #5C2D0E (Textos principales, contrastes)
 
